@@ -2,14 +2,25 @@
 %Matlab Project
 
 import matlab.io.*
-filename = input('Enter file name: ', 's');
+% gets file from a given file name
+filename = input('Enter file name (including extention): ', 's');
+
+magnification = input('Enter image magnification: ');
+
 imMat=imread(filename);
-figure, imshow(imMat)
+% shows the original image
+%figure, imshow(imMat)
+% makes background stars dissapears for galaxies
 imMat=imgaussfilt(imMat,3);
-figure, imshow(imMat)
+%figure, imshow(imMat)
+% turns it into a black and white photo
 level=graythresh(imMat);
 BW=im2bw(imMat,level);
-figure, imshow(BW);
+imshow(BW);
+% only keeps the largest object
+BW2 = bwareafilt(BW, 1);
+figure, imshow(BW2)
+
 %numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
 
@@ -18,6 +29,3 @@ figure, imshow(BW);
 %figure, imshow(imMat);
 %subplot(1,2,1), imshow(imMat);
 %subplot(1,2,2), imshow(BW);
-
-% this is a test
-% 
