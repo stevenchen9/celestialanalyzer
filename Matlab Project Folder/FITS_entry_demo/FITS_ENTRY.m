@@ -2,7 +2,8 @@
 %Matlab Project
 
 import matlab.io.*
-imMat=imread('frame-irg-003712-3-0187.jpg');
+filename = input('Enter file name: ', 's');
+imMat=imread(filename);
 figure, imshow(imMat)
 imMat=imgaussfilt(imMat,3);
 figure, imshow(imMat)
