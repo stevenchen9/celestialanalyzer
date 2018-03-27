@@ -23,6 +23,10 @@ figure, imshow(BW2)
 
 sizeobj = getsize(BW2, magnification);
 
+% get centroids of the photo
+s = regionprops(BW2,'centroid');
+centroids = cat(1, s.Centroid);
+
 %numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
 
