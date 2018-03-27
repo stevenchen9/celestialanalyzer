@@ -10,6 +10,8 @@ figure, imshow(imMat)
 level=graythresh(imMat);
 BW=im2bw(imMat,level);
 figure, imshow(BW);
+s = regionprops(BW,'centroid');
+plot(s)
 %numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
 
