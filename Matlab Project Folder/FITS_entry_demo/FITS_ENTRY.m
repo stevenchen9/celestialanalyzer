@@ -21,12 +21,7 @@ imshow(BW);
 BW2 = bwareafilt(BW, 1);
 figure, imshow(BW2)
 
-% labels the point of focus
-labeled = bwlabel(BW2, 1);
-
-% gets the size of the white space
-[r,c] = find(labeled == 1);
-sizew = numel(r);
+sizeobj = getsize(BW2, magnification);
 
 %numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
