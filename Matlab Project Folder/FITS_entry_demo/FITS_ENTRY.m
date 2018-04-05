@@ -34,14 +34,15 @@ end
 figure, mesh(A);
 
 BW=im2bw(imMat,level);
-%%figure, imshow(BW);
+figure, imshow(BW);
 %s = regionprops(BW,'centroid');
 %plot(s)
-%%numObj=bwconncomp(BW);
+numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
 
-%BW=bwareaopen(BW,5000);x
-%figure, imshow(BW);
-%figure, imshow(imMat);
-%subplot(1,2,1), imshow(imMat);
-%subplot(1,2,2), imshow(BW);
+BW=bwareaopen(BW,5000);
+imwrite(BW,'isolated.png');
+figure, imshow(BW);
+
+stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity');
+eccentricity= stats(1,4);
