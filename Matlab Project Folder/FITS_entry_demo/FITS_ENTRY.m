@@ -6,8 +6,11 @@ import matlab.io.*
 filename = input('Enter file name (including extention): ', 's');
 
 magnification = input('Enter image magnification: ');
+distance = input('Enter image distance: '); 
 
 imMat=imread(filename);
+
+size = getsize(imMat, maginification, distance);
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
@@ -19,19 +22,8 @@ grayscale=rgb2gray(imMat);
 %takes rgb and turn to grayscale
 
 %intensity profile
-figure, imshow(grayscale);
-%improfile(grayscale,(1:1488),(1:1488))
-%have created a 3d intensity plot which will aid analysis
-A=zeros(1488,2048);
-x=[1,2047];
-y=[1,1];
-figure, plot(improfile(grayscale,x,y))
-for j=1:2040
-    for i=1:1480
-        A(i,j)=grayscale(i,j);
-    end
-end
-figure, mesh(A);
+profile = makintprof(grayscale);
+figure, mesh(profile);
 
 BW=im2bw(imMat,level);
 %%figure, imshow(BW);
