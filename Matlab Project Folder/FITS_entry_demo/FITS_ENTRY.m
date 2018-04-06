@@ -12,7 +12,7 @@ imMat=imread(filename);
 
 size = getsize(imMat, maginification, distance);
 % shows the original image
-%figure, imshow(imMat)
+figure, imshow(imMat)
 % makes background stars dissapears for galaxies
 imMat=imgaussfilt(imMat,3);
 figure, imshow(imMat)
@@ -34,7 +34,15 @@ numObj=bwconncomp(BW);
 
 BW=bwareaopen(BW,5000);
 imwrite(BW,'isolated.png');
+
+
+
+
+%this program puts a black dot on the centroid and shows us the location,
+%also useful to understand the stats function
+stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity');
+xcoord= round(stats{1,1}(1,2));
+ycoord= round(stats{1,1}(1,1));
+BW((xcoord-5):(xcoord+5),(ycoord-5):(ycoord+5))=0;
 figure, imshow(BW);
 
-stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity');
-eccentricity= stats(1,4);
