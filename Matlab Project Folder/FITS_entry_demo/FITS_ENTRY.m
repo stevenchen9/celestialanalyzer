@@ -21,7 +21,7 @@ level=graythresh(imMat);
 grayscale=rgb2gray(imMat);
 %takes rgb and turn to grayscale
 
-%intensity profile
+intensity profile
 profile = makintprof(grayscale);
 figure, mesh(profile);
 
@@ -45,4 +45,11 @@ xcoord= round(stats{1,1}(1,2));
 ycoord= round(stats{1,1}(1,1));
 BW((xcoord-5):(xcoord+5),(ycoord-5):(ycoord+5))=0;
 figure, imshow(BW);
+
+%intensity plot from image center
+%using improfile and a line segment the length of the major axis we can see
+%the intensity of the entire 
+xi=[xcoord, xcoord];
+yi=[ycoord, ycoord+4*round(stats{1,2})];
+improfile(imMat,xi,yi);
 
