@@ -5,10 +5,16 @@ import matlab.io.*
 % gets file from a given file name
 filename = input('Enter file name (including extention): ', 's');
 
-magnification = input('Enter image magnification: ');
-distance = input('Enter image distance: '); 
+[filepath,name,ext] = fileparts(filename); % in order to distinguish between file types
 
-imMat=imread(filename);
+if isequal(ext, '.fits') % check if it is a fits file
+    imMat = fitsread(filename, 'image');
+    
+else
+    magnification = input('Enter image magnification: ');
+    distance = input('Enter image distance: '); 
+    imMat=imread(filename);
+end
 
 %size = getsize(imMat, maginification, distance);
 % shows the original image
@@ -64,3 +70,4 @@ yi=[ycoord,ycoord-round(stats{1,2})];
 c=improfile(grayscale,xi,yi);
 figure, plot(c);
 
+shape = getshape(stats); % -1 if irregular, 0 if ellipse and 1 if circle
