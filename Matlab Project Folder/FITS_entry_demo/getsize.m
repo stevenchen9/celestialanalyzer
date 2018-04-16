@@ -1,6 +1,16 @@
-function result = getsize(img, radperpix, distance)
+function result = getsize(img, distance)
 % takes in a black and white image and a magnification and determines the size
 % of the largest object in the image
+
+%longstart = input('Enter mu_start: ');
+%longend = input('Enter mu_end; ');
+latstart = input('Enter nu_start: ');
+latend = input('Enter nu_end: ');
+
+[x,y] = size(img);
+
+% calculation for angular size in degrees
+radperpix = (latend-latstart) / x;
 
 % apply gaussian filter
 img2=imgaussfilt(img,3);
