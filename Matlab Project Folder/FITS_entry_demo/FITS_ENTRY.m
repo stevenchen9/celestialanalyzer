@@ -47,7 +47,7 @@ imwrite(BW,'isolated.png');
 
 %this program puts a black dot on the centroid and shows us the location,
 %also useful to understand the stats function
-stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity');
+stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity', 'Perimeter','EquivDiameter');
 xcoord= round(stats{1,1}(1,2));
 ycoord= round(stats{1,1}(1,1));
 BW((xcoord-5):(xcoord+5),(ycoord-5):(ycoord+5))=0;
@@ -68,6 +68,23 @@ figure, plot(rho);
 xi=[xcoord,xcoord];
 yi=[ycoord,ycoord-round(stats{1,2})];
 c=improfile(grayscale,xi,yi);
-figure, plot(c);
+%figure, plot(c);
 
-shape = getshape(stats); % -1 if irregular, 0 if ellipse and 1 if circle
+%get shape test funciton below we will then shift it to the separate file
+%it it works
+%shape = getshape(stats); % -1 if irregular, 0 if ellipse and 1 if circle
+[B,L]=bwboundaries(BW,'noholes');
+
+%using perimeter of real object and expected perimeter from an average of
+%major and minor axes we will differentiate
+P1=stats(1,6);
+CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
+ratio=(CircAssumed/P1);
+
+%display label matric and draw each boundary
+imshow(label2rgb(L,@jet,[.5 .5 .5]))
+hold on
+for k=1:length(B)
+    boundary = B{k};
+    plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
+end
