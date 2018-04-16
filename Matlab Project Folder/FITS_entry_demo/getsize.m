@@ -1,4 +1,4 @@
-function result = getsize(img, magnification, distance)
+function result = getsize(img, radperpix, distance)
 % takes in a black and white image and a magnification and determines the size
 % of the largest object in the image
 
@@ -15,6 +15,6 @@ labeled = bwlabel(BW, 1);
 [r,c] = find(labeled == 1);
 sizew = numel(r);
 
-
+result = ((1/(radperpix * sizew)) * 57 / distance);
 end
 

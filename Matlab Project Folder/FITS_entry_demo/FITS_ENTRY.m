@@ -9,7 +9,8 @@ filename = input('Enter file name (including extention): ', 's');
 
 if isequal(ext, '.fits') % check if it is a fits file
     imMat = fitsread(filename, 'image');
-    
+    info = fitsinfo(filename);
+    display(info)
 else
     magnification = input('Enter image magnification: ');
     distance = input('Enter image distance: '); 
