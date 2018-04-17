@@ -13,11 +13,11 @@ if isequal(ext, '.fits') % check if it is a fits file
     display(info)
 else
     magnification = input('Enter image magnification: ');
-    distance = input('Enter image distance: '); 
+    distance = input('Enter image distance (km): '); 
     imMat=imread(filename);
 end
 
-%size = getsize(imMat, maginification, distance);
+size = getsize(imMat, distance);
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
@@ -84,15 +84,18 @@ c=improfile(grayscale,xi,yi);
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
+shape = -2;
 if ratio<.8
     fprintf('this object is irregular in shape: ');
+    shape = -1; % for irregular
 else if ratio >.9 && .5 > stats{1,4}
     fprintf('this object is circular in shape: ');
+    shape = 1; % for circle
     else
         fprintf('this object is elliptical in shape: ');
+        shape = 0; % ellipse
     end
-end
-     
+end 
 
 %display label matric and draw each boundary
 imshow(label2rgb(L,@jet,[.5 .5 .5]))
@@ -101,3 +104,4 @@ for k=1:length(B)
     boundary = B{k};
     plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 end
+
