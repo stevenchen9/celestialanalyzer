@@ -48,6 +48,8 @@ imwrite(BW,'isolated.png');
 
 %this program puts a black dot on the centroid and shows us the location,
 %also useful to understand the stats function
+h=(ones(20,20)/400);
+BW=imfilter(BW,h);
 stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity', 'Perimeter','EquivDiameter');
 xcoord= round(stats{1,1}(1,2));
 ycoord= round(stats{1,1}(1,1));
@@ -69,6 +71,7 @@ figure, plot(rho);
 xi=[xcoord,xcoord];
 yi=[ycoord,ycoord-round(stats{1,2})];
 c=improfile(grayscale,xi,yi);
+
 %figure, plot(c);
 
 %get shape test funciton below we will then shift it to the separate file
@@ -78,9 +81,12 @@ c=improfile(grayscale,xi,yi);
 
 %using perimeter of real object and expected perimeter from an average of
 %major and minor axes we will differentiate
-P1=stats(1,6);
+P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
+if ratio<75
+    fprintf('this object is irregular in shape: ');
+end
 
 %display label matric and draw each boundary
 imshow(label2rgb(L,@jet,[.5 .5 .5]))
