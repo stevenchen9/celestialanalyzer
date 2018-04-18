@@ -11,13 +11,14 @@ if isequal(ext, '.fits') % check if it is a fits file
     imMat = fitsread(filename, 'image');
     info = fitsinfo(filename);
     display(info)
+    
 else
     magnification = input('Enter image magnification: ');
     distance = input('Enter image distance (km): '); 
     imMat=imread(filename);
 end
 
-size = getsize(imMat, distance);
+%size = getsize(imMat, distance);
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies

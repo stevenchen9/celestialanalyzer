@@ -9,6 +9,9 @@ if shape == 1 % circle
     else 
         % other info needed
     end
-end
+elseif shape == 0 % elliptical
+    classification = ('galaxy');
+else % irregular
+    classification = ('nebula');
 end
 
