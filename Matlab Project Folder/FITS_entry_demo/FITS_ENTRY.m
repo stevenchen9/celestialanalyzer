@@ -85,17 +85,16 @@ c=improfile(grayscale,xi,yi);
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
-shape = -2;
+%shape = -2;
 if ratio<.8
     fprintf('this object is irregular in shape: ');
     shape = -1; % for irregular
-else if ratio >.9 && .5 > stats{1,4}
+elseif ratio >.9 && .5 > stats{1,4}
     fprintf('this object is circular in shape: ');
     shape = 1; % for circle
-    else
-        fprintf('this object is elliptical in shape: ');
-        shape = 0; % ellipse
-    end
+else
+    fprintf('this object is elliptical in shape: ');
+    shape = 0; % ellipse
 end 
 
 %display label matric and draw each boundary
