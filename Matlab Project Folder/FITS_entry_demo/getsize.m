@@ -1,4 +1,4 @@
-function result = getsize(img, distance)
+function [result, cutoff] = getsize(img, distance)
 % takes in a black and white image and a magnification and determines the size
 % of the largest object in the image
 
@@ -7,6 +7,7 @@ function result = getsize(img, distance)
 latstart = input('Enter nu_start: ');
 latend = input('Enter nu_end: ');
 
+figure, imshow(img)
 [x,y] = size(img);
 
 % calculation for angular size in degrees
@@ -15,15 +16,25 @@ radperpix = (latend-latstart) / x;
 % apply gaussian filter
 img2=imgaussfilt(img,3);
 
-level=graythresh(img2);
+level=im2bw(img2, 0.4);
+figure, imshow(level)
 
-BW=bwareaopen(level,5000);
+BW=bwareafilt(level,1);
+figure, imshow(BW)
 % labels the point of focus
-labeled = bwlabel(BW, 1);
+labeled = bwlabel(BW, 4);
 
 % gets the size of the white space
 [r,c] = find(labeled == 1);
+rc = [r c];
 sizew = numel(r);
+
+cutoff = false;
+for i = 1:sizew
+    if rc(i, 1) == 0 || rc(i, 2) == 0
+        cutoff = true;
+    end
+end
 
 result = ((1/(radperpix * sizew)) * 57 / distance);
 end

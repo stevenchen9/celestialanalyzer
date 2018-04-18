@@ -18,7 +18,12 @@ else
     imMat=imread(filename);
 end
 
-%size = getsize(imMat, distance);
+
+[result, cutoff] = getsize(imMat, distance);
+fprintf('%d km\n', size)
+if cutoff == true
+    disp('image cutoff')
+end
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
@@ -87,13 +92,13 @@ CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
 %shape = -2;
 if ratio<.8
-    fprintf('this object is irregular in shape: ');
+    fprintf('this object is irregular in shape: \n');
     shape = -1; % for irregular
 elseif ratio >.9 && .5 > stats{1,4}
-    fprintf('this object is circular in shape: ');
+    fprintf('this object is circular in shape: \n');
     shape = 1; % for circle
 else
-    fprintf('this object is elliptical in shape: ');
+    fprintf('this object is elliptical in shape: \n');
     shape = 0; % ellipse
 end 
 
@@ -105,3 +110,4 @@ for k=1:length(B)
     plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 end
 
+classify(result, shape)

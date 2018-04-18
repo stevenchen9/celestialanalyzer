@@ -1,17 +1,17 @@
-function [classification] = classify(size, shape)
+function classify(size, shape)
 % takes in all the data and makes a prediction of celestial type
 
 if shape == 1 % circle
     if size < 160000 % largest planet is 159,834 km
-        classification = ('planet');
+        disp('planet')
     elseif size > 167000 % smallest star found
-        classification = ('star');
+        disp('star')
     else 
         % other info needed
     end
 elseif shape == 0 % elliptical
-    classification = ('galaxy');
+    disp('galaxy')
 else % irregular
-    classification = ('nebula');
+    disp('nebula')
 end
 
