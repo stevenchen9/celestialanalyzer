@@ -13,22 +13,18 @@ if isequal(ext, '.fits') % check if it is a fits file
     display(info)
     
 else
-    magnification = input('Enter image magnification: ');
+    %magnification = input('Enter image magnification: ');
     distance = input('Enter image distance (km): '); 
     imMat=imread(filename);
 end
 
 
-[result, cutoff] = getsize(imMat, distance);
-fprintf('%d km\n', size)
-if cutoff == true
-    disp('image cutoff')
-end
+
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
 imMat=imgaussfilt(imMat,3);
-figure, imshow(imMat)
+%figure, imshow(imMat)
 % turns it into a black and white photo
 level=graythresh(imMat);
 grayscale=rgb2gray(imMat);
@@ -47,7 +43,7 @@ numObj=bwconncomp(BW);
 %val = max(numObj.PixelIdxList)
 
 BW=bwareaopen(BW,5000);
-imwrite(BW,'isolated.png');
+%imwrite(BW,'isolated.png');
 
 
 
@@ -60,15 +56,15 @@ stats = regionprops('table',BW,'Centroid','MajorAxisLength','MinorAxisLength','E
 xcoord= round(stats{1,1}(1,2));
 ycoord= round(stats{1,1}(1,1));
 BW((xcoord-5):(xcoord+5),(ycoord-5):(ycoord+5))=0;
-figure, imshow(grayscale);
-figure, imshow(BW);
+%figure, imshow(grayscale);
+%figure, imshow(BW);
 %first attempt polar plot from COM of galaxy
 
 theta=0:0.01:2*pi;
 x1=[xcoord,cos(theta)*round(stats{1,2})];
 y1=[xcoord,sin(theta)*round(stats{1,2})];
 rho=mean(improfile(grayscale,x1,y1));
-figure, plot(rho);
+%figure, plot(rho);
 
 
 %intensity plot from image center
@@ -92,22 +88,29 @@ CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
 %shape = -2;
 if ratio<.8
-    fprintf('this object is irregular in shape: \n');
+    fprintf('\nthis object is irregular in shape: \n');
     shape = -1; % for irregular
 elseif ratio >.9 && .5 > stats{1,4}
-    fprintf('this object is circular in shape: \n');
+    fprintf('\nthis object is circular in shape: \n');
     shape = 1; % for circle
 else
-    fprintf('this object is elliptical in shape: \n');
+    fprintf('\nthis object is elliptical in shape: \n');
     shape = 0; % ellipse
 end 
 
 %display label matric and draw each boundary
-imshow(label2rgb(L,@jet,[.5 .5 .5]))
+%imshow(label2rgb(L,@jet,[.5 .5 .5]))
 hold on
 for k=1:length(B)
     boundary = B{k};
     plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 end
 
+[result, cutoff] = getsize(imMat, distance, stats);
+fprintf('\nSize of Object: %d km\n\n', result)
+if cutoff == true
+    disp('The image is cutoff')
+else 
+    disp('The image is not cutoff')
+end
 classify(result, shape)

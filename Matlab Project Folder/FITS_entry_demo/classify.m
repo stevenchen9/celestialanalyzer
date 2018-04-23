@@ -3,15 +3,19 @@ function classify(size, shape)
 
 if shape == 1 % circle
     if size < 160000 % largest planet is 159,834 km
-        disp('planet')
+        fprintf('\n')
+        disp('Object is a planet')
     elseif size > 167000 % smallest star found
-        disp('star')
+        fprintf('\n')
+        disp('Object is a star')
     else 
         % other info needed
     end
 elseif shape == 0 % elliptical
-    disp('galaxy')
+    fprintf('\n')
+    disp('Object is a galaxy')
 else % irregular
-    disp('nebula')
+    fprintf('\n')
+    disp('Object is a nebula')
 end
 

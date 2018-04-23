@@ -1,4 +1,4 @@
-function [result, cutoff] = getsize(img, distance)
+function [result, cutoff] = getsize(img, distance, stats)
 % takes in a black and white image and a magnification and determines the size
 % of the largest object in the image
 
@@ -7,17 +7,17 @@ function [result, cutoff] = getsize(img, distance)
 latstart = input('Enter nu_start: ');
 latend = input('Enter nu_end: ');
 
-figure, imshow(img)
+%figure, imshow(img)
 [x,y] = size(img);
 
 % calculation for angular size in degrees
-radperpix = (latend-latstart) / x;
+radperpix = abs(latend-latstart) / x;
 
 % apply gaussian filter
 img2=imgaussfilt(img,3);
 
 level=im2bw(img2, 0.4);
-figure, imshow(level)
+%figure, imshow(level)
 
 BW=bwareafilt(level,1);
 figure, imshow(BW)
@@ -36,6 +36,6 @@ for i = 1:sizew
     end
 end
 
-result = ((1/(radperpix * sizew)) * 57 / distance);
+result = ((1/(radperpix * stats.MajorAxisLength)) * 57 / distance);
 end
 
