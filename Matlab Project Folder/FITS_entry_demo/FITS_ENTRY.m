@@ -11,13 +11,19 @@ if isequal(ext, '.fits') % check if it is a fits file
     imMat = fitsread(filename, 'image');
     info = fitsinfo(filename);
     display(info)
+    
 else
     magnification = input('Enter image magnification: ');
-    distance = input('Enter image distance: '); 
+    distance = input('Enter image distance (km): '); 
     imMat=imread(filename);
 end
 
-%size = getsize(imMat, maginification, distance);
+
+[result, cutoff] = getsize(imMat, distance);
+fprintf('%d km\n', size)
+if cutoff == true
+    disp('image cutoff')
+end
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
@@ -87,7 +93,9 @@ figure, plot(c);
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
+%shape = -2;
 if ratio<.8
+<<<<<<< HEAD
    fprintf('this object is irregular in shape: ');
 else if ratio >.9 && .5 > stats{1,4}
     fprintf('this object is circular in shape: ');
@@ -97,6 +105,17 @@ else if ratio >.9 && .5 > stats{1,4}
 end
 
      
+=======
+    fprintf('this object is irregular in shape: \n');
+    shape = -1; % for irregular
+elseif ratio >.9 && .5 > stats{1,4}
+    fprintf('this object is circular in shape: \n');
+    shape = 1; % for circle
+else
+    fprintf('this object is elliptical in shape: \n');
+    shape = 0; % ellipse
+end 
+>>>>>>> 8b7d9c9ae67ad6538e2248cde84c15dff8167820
 
 %display label matric and draw each boundary
 imshow(label2rgb(L,@jet,[.5 .5 .5]))
@@ -105,3 +124,5 @@ for k=1:length(B)
     boundary = B{k};
     plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 end
+
+classify(result, shape)
