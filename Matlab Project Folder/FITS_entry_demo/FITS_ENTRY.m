@@ -21,7 +21,7 @@ end
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
-imMat=imgaussfilt(imMat,3);
+%imMat=imgaussfilt(imMat,3);
 figure, imshow(imMat)
 % turns it into a black and white photo
 level=graythresh(imMat);
@@ -62,7 +62,10 @@ theta=0:0.01:2*pi;
 x1=[xcoord,cos(theta)*round(stats{1,2})];
 y1=[xcoord,sin(theta)*round(stats{1,2})];
 rho=mean(improfile(grayscale,x1,y1));
-figure, plot(rho);
+%figure, plot(rho);
+
+%star cluster analysis
+stats1 = regionprops('table',grayscale,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity', 'Perimeter','EquivDiameter');
 
 
 %intensity plot from image center
@@ -71,8 +74,7 @@ figure, plot(rho);
 xi=[xcoord,xcoord];
 yi=[ycoord,ycoord-round(stats{1,2})];
 c=improfile(grayscale,xi,yi);
-
-%figure, plot(c);
+figure, plot(c);
 
 %get shape test funciton below we will then shift it to the separate file
 %it it works
@@ -81,17 +83,19 @@ c=improfile(grayscale,xi,yi);
 
 %using perimeter of real object and expected perimeter from an average of
 %major and minor axes we will differentiate
+
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
 if ratio<.8
-    fprintf('this object is irregular in shape: ');
+   fprintf('this object is irregular in shape: ');
 else if ratio >.9 && .5 > stats{1,4}
     fprintf('this object is circular in shape: ');
     else
-        fprintf('this object is elliptical in shape: ');
-    end
+       fprintf('this object is elliptical in shape: ');
+  end
 end
+
      
 
 %display label matric and draw each boundary
