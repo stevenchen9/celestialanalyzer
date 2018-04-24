@@ -89,13 +89,13 @@ CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
 %shape = -2;
 if ratio<.8
-   fprintf('this object is irregular in shape: ');
+   %fprintf('this object is irregular in shape: ');
     shape = -1; % for irregular
 elseif ratio >.9 && .5 > stats{1,4}
-    fprintf('\nthis object is circular in shape: \n');
+    %fprintf('\nthis object is circular in shape: \n');
     shape = 1; % for circle
 else
-    fprintf('\nthis object is elliptical in shape: \n');
+    %fprintf('\nthis object is elliptical in shape: \n');
     shape = 0; % ellipse
 end 
 
@@ -109,11 +109,22 @@ end
 
 [result, cutoff] = getsize(imMat, distance, stats);
 
-fprintf('\nSize of Object: %d km\n\n', result)
+fprintf('\nSize of Object: %d km', result);
 
 if cutoff == true
+    fprintf('\n')
     disp('The image is cutoff')
 else 
+    fprintf('\n')
     disp('The image is not cutoff')
 end
+
+if shape == -1
+    fprintf('\nThis object is irregular in shape\n')
+elseif shape == 0
+    fprintf('\nThis object is elliptical\n')
+else
+    fprintf('\nThis object is circular\n')
+end
+
 classify(result, shape)
