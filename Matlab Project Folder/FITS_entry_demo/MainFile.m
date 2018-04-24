@@ -13,6 +13,7 @@ if isequal(ext, '.fits') % check if it is a fits file
     display(info)
     
 else
+    
     %magnification = input('Enter image magnification: ');
     distance = input('Enter image distance (km): '); 
     imMat=imread(filename);
@@ -23,13 +24,9 @@ end
 % shows the original image
 %figure, imshow(imMat)
 % makes background stars dissapears for galaxies
-<<<<<<< HEAD:Matlab Project Folder/FITS_entry_demo/FITS_ENTRY.m
 imMat=imgaussfilt(imMat,3);
 %figure, imshow(imMat)
-=======
-%imMat=imgaussfilt(imMat,3);
-figure, imshow(imMat)
->>>>>>> 9341fb258bf9b2296a8ccf878dadd84c5e84e1df:Matlab Project Folder/FITS_entry_demo/MainFile.m
+
 % turns it into a black and white photo
 level=graythresh(imMat);
 grayscale=rgb2gray(imMat);
@@ -70,13 +67,6 @@ x1=[xcoord,cos(theta)*round(stats{1,2})];
 y1=[xcoord,sin(theta)*round(stats{1,2})];
 rho=mean(improfile(grayscale,x1,y1));
 %figure, plot(rho);
-<<<<<<< HEAD:Matlab Project Folder/FITS_entry_demo/FITS_ENTRY.m
-=======
-
-%star cluster analysis
-stats1 = regionprops('table',grayscale,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity', 'Perimeter','EquivDiameter');
->>>>>>> 9341fb258bf9b2296a8ccf878dadd84c5e84e1df:Matlab Project Folder/FITS_entry_demo/MainFile.m
-
 
 %intensity plot from image center
 %using improfile and a line segment the length of the major axis we can see
@@ -84,7 +74,7 @@ stats1 = regionprops('table',grayscale,'Centroid','MajorAxisLength','MinorAxisLe
 xi=[xcoord,xcoord];
 yi=[ycoord,ycoord-round(stats{1,2})];
 c=improfile(grayscale,xi,yi);
-figure, plot(c);
+%figure, plot(c);
 
 %get shape test funciton below we will then shift it to the separate file
 %it it works
@@ -99,22 +89,7 @@ CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
 ratio=(CircAssumed/P1);
 %shape = -2;
 if ratio<.8
-<<<<<<< HEAD:Matlab Project Folder/FITS_entry_demo/FITS_ENTRY.m
-    fprintf('\nthis object is irregular in shape: \n');
-=======
-<<<<<<< HEAD
    fprintf('this object is irregular in shape: ');
-else if ratio >.9 && .5 > stats{1,4}
-    fprintf('this object is circular in shape: ');
-    else
-       fprintf('this object is elliptical in shape: ');
-  end
-end
-
-     
-=======
-    fprintf('this object is irregular in shape: \n');
->>>>>>> 9341fb258bf9b2296a8ccf878dadd84c5e84e1df:Matlab Project Folder/FITS_entry_demo/MainFile.m
     shape = -1; % for irregular
 elseif ratio >.9 && .5 > stats{1,4}
     fprintf('\nthis object is circular in shape: \n');
@@ -123,7 +98,6 @@ else
     fprintf('\nthis object is elliptical in shape: \n');
     shape = 0; % ellipse
 end 
->>>>>>> 8b7d9c9ae67ad6538e2248cde84c15dff8167820
 
 %display label matric and draw each boundary
 %imshow(label2rgb(L,@jet,[.5 .5 .5]))
