@@ -112,10 +112,10 @@ end
 fprintf('\nSize of Object: %d km', result);
 
 if cutoff == true
-    fprintf('\n')
+    fprintf('\n\n')
     disp('The image is cutoff')
 else 
-    fprintf('\n')
+    fprintf('\n\n')
     disp('The image is not cutoff')
 end
 

@@ -10,7 +10,7 @@ latend = input('Enter nu_end: ');
 [x,y] = size(img);
 
 % calculation for angular size in degrees
-radperpix = abs(latend-latstart) / x;
+radperpix = (abs(latend-latstart) / x);
 
 % apply gaussian filter
 img2=imgaussfilt(img,3);
@@ -33,6 +33,6 @@ for i = 1:sizew
     end
 end
 
-result = ((1/(radperpix * stats.MajorAxisLength)) * 57 / distance);
+result = (distance / ((1/(radperpix * max(stats.MajorAxisLength)))*57));
 end
 
