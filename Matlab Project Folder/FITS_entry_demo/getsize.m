@@ -28,7 +28,7 @@ sizew = numel(r);
 
 cutoff = false;
 for i = 1:sizew
-    if rc(i, 1) == 0 || rc(i, 2) == 0
+    if rc(i, 1) == 1 || rc(i, 2) == 1
         cutoff = true;
     end
 end
