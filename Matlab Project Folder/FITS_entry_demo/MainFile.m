@@ -108,7 +108,9 @@ for k=1:length(B)
 end
 
 [result, cutoff] = getsize(imMat, distance, stats);
+
 fprintf('\nSize of Object: %d km\n\n', result)
+
 if cutoff == true
     disp('The image is cutoff')
 else 
