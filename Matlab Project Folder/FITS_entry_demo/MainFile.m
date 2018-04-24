@@ -107,7 +107,7 @@ end
 %    plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 %end
 
-[result, cutoff] = getsize(imMat, distance, stats);
+[result, cutoff] = getsize(imMat, distance);
 
 fprintf('\nSize of Object: %d km', result);
 
