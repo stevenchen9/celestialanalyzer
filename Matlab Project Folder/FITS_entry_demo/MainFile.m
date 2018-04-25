@@ -83,6 +83,7 @@ c=improfile(grayscale,xi,yi);
 
 %using perimeter of real object and expected perimeter from an average of
 %major and minor axes we will differentiate
+[result, cutoff, stats] = getsize(imMat, distance);
 
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
@@ -107,7 +108,7 @@ end
 %    plot(boundary(:,2), boundary(:,1), 'w', 'LineWidth', 2)
 %end
 
-[result, cutoff] = getsize(imMat, distance);
+
 
 fprintf('\nSize of Object: %d km', result);
 

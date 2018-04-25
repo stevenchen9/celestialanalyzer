@@ -1,4 +1,4 @@
-function [result, cutoff] = getsize(img, distance)
+function [result, cutoff, stats] = getsize(img, distance)
 % takes in a black and white image and a magnification and determines the size
 % of the largest object in the image
 
@@ -15,15 +15,12 @@ radperpix = (abs(latend-latstart) / x);
 % apply gaussian filter
 img2=imgaussfilt(img,10);
 
-level=im2bw(img2, 0.7);
-
-imshow(level)
+level=im2bw(img2, 0.55);
 
 BW=bwareaopen(level,5000);
 % labels the point of focus
 labeled = bwlabeln(BW, 1);
 stats = regionprops('table',labeled,'Centroid','MajorAxisLength','MinorAxisLength','Eccentricity', 'Perimeter','EquivDiameter');
-
 
 % gets the size of the white space
 [r,c] = find(labeled == 1);
