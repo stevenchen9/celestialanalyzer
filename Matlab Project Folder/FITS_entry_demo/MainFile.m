@@ -83,7 +83,6 @@ c=improfile(grayscale,xi,yi);
 
 %using perimeter of real object and expected perimeter from an average of
 %major and minor axes we will differentiate
-[result, cutoff, stats] = getsize(imMat, distance);
 
 P1=stats{1,6};
 CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
@@ -99,6 +98,8 @@ else
     %fprintf('\nthis object is elliptical in shape: \n');
     shape = 0; % ellipse
 end 
+
+[result, cutoff] = getsize(imMat, distance, shape);
 
 %display label matric and draw each boundary
 %imshow(label2rgb(L,@jet,[.5 .5 .5]))
