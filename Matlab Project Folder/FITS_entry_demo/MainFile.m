@@ -31,7 +31,7 @@ grayscale=rgb2gray(imMat);
 %takes rgb and turn to grayscale
 
 %intensity profile
-profile = makintprof(grayscale);
+%profile = makeintprof(grayscale);
 %figure, mesh(profile);
 
 BW=im2bw(imMat,level);
@@ -41,9 +41,9 @@ numObj=bwconncomp(BW);
 
 BW=bwareaopen(BW,5000);
 
-stats = plotcentroid(BW); % plots the centroid and gets the stats of the object
+[stats, xcoord, ycoord] = plotcentroid(BW, grayscale); % plots the centroid and gets the stats of the object
 
-makeintplot(stats);
+makeintplot(stats, grayscale, xcoord, ycoord);
 
 [B,L]=bwboundaries(BW,'noholes');
 

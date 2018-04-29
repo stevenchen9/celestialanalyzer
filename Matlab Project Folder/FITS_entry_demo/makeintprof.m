@@ -1,6 +1,4 @@
 function intprofile = makeintprof(grayscale)
-imMat=imread('test1.jpg');
-grayscale=rgb2gray(imMat);
 %intensity profile
 figure, imshow(grayscale);
 %improfile(grayscale,(1:1488),(1:1488))
