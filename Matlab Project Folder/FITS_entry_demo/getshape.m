@@ -1,16 +1,18 @@
 function shape = getshape(stats)
-% Uses major and minor axis to determine shape
-major = stats.MajorAxisLength;
-minor = stats.MinorAxisLength;
 
-ratio = major/minor;
-
-if ratio > 0.95 || ratio < 1.05
-    shape = 1;
-elseif ratio > 0.5 || ratio < 1.5
-    shape = 0;
-else 
-    shape = -1;
-end
+P1=stats{1,6};
+CircAssumed=pi*((stats{1,2}+ stats{1,3})/2);
+ratio=(CircAssumed/P1);
+%shape = -2;
+if ratio<.8
+   %fprintf('this object is irregular in shape: ');
+    shape = -1; % for irregular
+elseif ratio >.9 && .5 > stats{1,4}
+    %fprintf('\nthis object is circular in shape: \n');
+    shape = 1; % for circle
+else
+    %fprintf('\nthis object is elliptical in shape: \n');
+    shape = 0; % ellipse
+end 
 end
 

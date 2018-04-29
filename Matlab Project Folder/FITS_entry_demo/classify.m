@@ -5,9 +5,13 @@ if shape == 1 % circle
     if size < 334000 % largest planet has radius of 159,834 km
         fprintf('\n')
         disp('Object is a planet')
+        area = circlearea(result);
+        fprintf('\nArea is %dkm^2\n', area);
     elseif size > 334000 % smallest star found has a diameter of 334000
         fprintf('\n')
         disp('Object is a star')
+        area = circlearea(result);
+        fprintf('\nArea is %dkm^2\n', area);
     else 
         % other info needed
     end

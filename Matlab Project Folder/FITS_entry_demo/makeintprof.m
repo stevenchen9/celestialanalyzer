@@ -1,4 +1,4 @@
-%function intprofile = makeintprof(grayscale)
+function intprofile = makeintprof(grayscale)
 imMat=imread('test1.jpg');
 grayscale=rgb2gray(imMat);
 %intensity profile
@@ -13,7 +13,8 @@ for j=1:2040
     for i=1:1480
         intprofile(i,j)=grayscale(i,j);
     end
+    
 end
 figure, mesh(intprofile);
-%end
+end
 
